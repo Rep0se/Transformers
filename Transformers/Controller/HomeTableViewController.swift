@@ -63,7 +63,7 @@ class HomeTableViewController: UITableViewController {
     
     @objc func handleCreateNew(){
         print("Create button tapped")
-        let createVC = CreateNewViewController()
+        let createVC = EditTransformerViewController()
         // possible delegate <----
         self.navigationController?.show(createVC, sender: self)
     }
