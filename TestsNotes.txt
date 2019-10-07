@@ -1,0 +1,205 @@
+==========
+Unit Tests:
+==========
+All spark:
+Verify we get 2 values back from all spark
+verify allspark token is cached and same token is used on same call in every subsequent call to API, can be verifed in the functional test suite too.
+
+Post (Create) :
+verify there are 10 values in the request call to transformers
+verify there are 12 values in the response
+verify the type of value for each (integer vs decimal, text, null values..etc) and error handling around that
+
+GET:
+verify we get a structured list name "transformers"
+Verify each object in list, has the right number of values, and right type for each value
+
+PUT(Update):
+verify there are 11 values in the request call to transformers
+verify there are 12 values in the response
+verify the type of value for each (integer vs decimal, text, null values..etc) and error handling around that
+
+Delete:
+verify there is 1 values in the request call to transformers ({transformerID})
+verify the type of value (text, null values) and error handling around that
+*no mention of requirment for response, but verify we get a confirm on deletion, that's always nice to have.*
+
+UI Page:
+Verify there is a UI to input data and recieve response
+Verify a button exist on screen to start battle
+
+==========
+Functional:
+==========
+1)Verify inputting through UI (whichever way we design it) 
+a)create Soundwave, D, 8,9,2,6,7,5,6,10
+  creates a transformer
+
+b)Update ID,Soundwave, D, 8,9,2,6,7,5,6,10
+  updates a transformer (and not create a new one)
+
+c)Get transformers, list all existing ones within system
+
+d) Button to launch battle takes list of potential fighters
+
+2) Verify UI displays results in this format
+1 battle
+Winning team (Decepticons): Soundwave
+Survivors from the losing team (Autobots): Hubcap
+
+or
+
+1 battle
+Winning team (Autobots): Optimus Prime
+Survivors from the winning team (Autobots): Hubcap
+
+3) Verify The teams should be sorted by rank and faced off one on one against each other in order to determine a victor, the loser is eliminated
+
+4) Battle functionality :
+*let's get the easy ones out of the way*
+* Optimus Prime and PredaKing outlier scenarios:
+a) Optimus Prime against oponent X (not PK) , OP wins
+b) PredaKing agsinst oponsne X (not OP) , PK wins
+c) OP vs PK , both lose, game finish immediatly. all lose, no winners
+d) OP vs OP , both lose, game finish immediatly. all lose, no winners
+e) PK vs PK , both lose, game finish immediatly. all lose, no winners
+
+------------------------------
+*Run away, lose battle, no destruction scenarios:
+Transformer A vs Transformer B
+
+Main base scenario from requirement
+		T_A	T_B
+Courage		4	8	T_A is 4 points less than T_B
+Strength	3	6	AND 3 points less than T_B
+Result 		Run 	Win
+
+		T_A	T_B
+Courage		3	8	T_A is 5 points less than T_B
+Strength	3	6	AND 3 points less than T_B
+Result 		Run 	Win
+
+		T_A	T_B
+Courage		5	8	T_A is 3 points less than T_B
+Strength	3	6	AND 3 points less than T_B
+Result 		Continue
+
+		T_A	T_B
+Courage		4	8	T_A is 4 points less than T_B
+Strength	2	6	AND 4 points less than T_B
+Result 		Run 	Win
+
+		T_A	T_B
+Courage		4	8	T_A is 4 points less than T_B
+Strength	4	6	AND 2 points less than T_B
+Result 		Continue
+
+		T_A	T_B
+Courage		2	8	T_A is 6 points less than T_B
+Strength	2	6	AND 4 points less than T_B
+Result 		Run 	Win
+
+		T_A	T_B
+Courage		6	8	T_A is 2 points less than T_B
+Strength	6	6	AND 0 points less than T_B
+Result 		Continue
+
+not sure if we want to test the opposite also,but it's the same tests flipped. do it if we have time
+e.g.
+		T_A	T_B
+Courage		8	4	T_B is 4 points less than T_A
+Strength	6	3	AND 3 points less than T_A
+Result 		Win 	Run
+------------------------------
+* Skill win overpower scenarios:
+Transformer A vs Transformer B
+
+Main base scenario from requirement
+		T_A	T_B
+Skill		3	6	T_B is 3 points more than T_A
+Result 		Die	Win
+
+		T_A	T_B
+Skill		2	6	T_B is 4 points more than T_A
+Result 		Die	Win
+
+		T_A	T_B
+Skill		6	6	T_B is 0 points more/less than T_A
+Result 		Continue
+
+		T_A	T_B
+Skill		8	6	T_B is 2 points less than T_A
+Result 		Continue
+------------------------------
+*Main Fight Scenarios:
+Overall rating wins
+		T_A	T_B
+Overall 	53	60	T_B is 7 points more than T_A
+Result 		Die	Win
+
+		T_A	T_B
+Overall 	63	60	T_A is 3 points more than T_B
+Result 		Win	Die
+
+		T_A	T_B
+Overall 	60	60	T_A tied with T_A
+Result 		Die	Die
+------------------------------
+Battle management scenarios:
+1) Verify Team number imbalance scenarios:
+Team A has 3
+Team B has 5
+3 battles
+last bottom 2 ranked in Team B survive
+
+b) 
+Team A has 1
+Team B has 1
+1 battle
+no survivors
+
+c)
+Team A has 3
+Team B has 2
+2 battles
+last bottom 1 ranked from team A survive
+
+2) Verify overal Team winner scenarios (can resue team imbalance cases)
+Team A has 3
+Team B has 5
+3 battles
+	TeamA	TeamB
+Battle	3Win	0Win
+Result  TeamA
+
+	TeamA	TeamB
+Battle	1Win	2Win
+Result  TeamB
+
+(we can add more iterations, but it's just flipping their sides)
+
+b) 
+Team A has 1
+Team B has 1
+1 battle
+no survivors
+
+	TeamA	TeamB
+Battle	1Win	0Win
+Result  TeamA
+
+c)
+Team A has 3
+Team B has 2
+2 battles
+
+	TeamA	TeamB
+Battle	2Win	0Win
+Result  TeamA
+
+
+	TeamA	TeamB
+Battle	1Win	1Win
+Result  No Winners/All destruction/ tie ? 
+
+

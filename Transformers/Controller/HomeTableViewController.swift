@@ -40,19 +40,19 @@ class HomeTableViewController: UITableViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Transformers Logo")
-        imageView.tintColor = .gray
+        imageView.tintColor = .darkGray
         return imageView
     }()
     
     lazy var battleButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Battle Icon"), style: .plain, target: self, action: #selector(handleBattle))
-        barButton.tintColor = .gray
+        barButton.tintColor = .darkGray
         return barButton
     }()
     
     lazy var createNewButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "round_add_black_24pt"), style: .plain, target: self, action: #selector(handleCreateNew))
-        barButton.tintColor = .gray
+        barButton.tintColor = .darkGray
         return barButton
     }()
     
@@ -82,12 +82,8 @@ class HomeTableViewController: UITableViewController {
     
     // MARK: View Setup
     private func setupNavbar(){
-//        navigationItem.title = "Transformers"
-//        let logoView = UIImageView()
-//        logoView.contentMode = .scaleAspectFit
-//        logoView.image = #imageLiteral(resourceName: "Transformers Logo")
-//        logoView.tintColor = .gray
         navigationItem.titleView = logoView
+        navigationController?.navigationBar.tintColor = .darkGray
         // Always display Large title in this View Controller
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .never
@@ -134,30 +130,7 @@ class HomeTableViewController: UITableViewController {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
-    // iOS 11+
-//    override func tableView(_ tableView: UITableView,
-//                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-//    {
-//        let remove = UIContextualAction(style: .normal, title:  "Remove", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-//            print("Remove button tapped at cell \(indexPath)")
-//            success(true)
-//        })
-//        remove.backgroundColor = .red
-//        return UISwipeActionsConfiguration(actions: [remove])
-//    }
-//
-//    override func tableView(_ tableView: UITableView,
-//                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-//    {
-//
-//        let edit = UIContextualAction(style: .normal, title:  "Edit", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-//            print("Edit button tapped at \(indexPath)")
-//            success(true)
-//        })
-//        edit.backgroundColor = .gray
-//        return UISwipeActionsConfiguration(actions: [edit])
-//    }
+
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { [weak self] action, index in
@@ -172,43 +145,5 @@ class HomeTableViewController: UITableViewController {
 
         return [remove, edit]
     }
-
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

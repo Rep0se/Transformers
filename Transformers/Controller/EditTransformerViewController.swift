@@ -15,100 +15,21 @@ class EditTransformerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .white
         setupNavbar()
+        setupView()
     }
     
-    // MARK: - Views
-    private let teamLabel: UILabel = {
-        let textLabel = UILabel()
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        return textLabel
+    // MARK: - UI Elements
+    private let editView: UIView = {
+        let view = EditTransformerView(frame: CGRect.zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
-    
-    private let teamTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textField.textColor = .white
-        return textField
-    }()
-    
-    private let teamChevronImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "round_arrow_drop_down_black_24pt")
-        return imageView
-    }()
-    
-    private let teamLine: UIProgressView = {
-        let line = UIProgressView()
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.progress = 1.0
-        return line
-    }()
-    
-    lazy var teamButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleTeamSelection), for: .touchUpInside)
-        return button
-    }()
-    
-    //--
-    
-    private let nameLabel: UILabel = {
-        let textLabel = UILabel()
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        return textLabel
-    }()
-    
-    private let nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textField.textColor = .white
-        return textField
-    }()
-    
-    private let nameChevronImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = #imageLiteral(resourceName: "round_arrow_drop_down_black_24pt")
-        return imageView
-    }()
-    
-    private let nameLine: UIProgressView = {
-        let line = UIProgressView()
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.progress = 1.0
-        return line
-    }()
-    
-    lazy var nameButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(handleNameSelection), for: .touchUpInside)
-        return button
-    }()
-    
-    //--
-    
-    private let techSpecsLabel: UILabel = {
-        let textLabel = UILabel()
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        return textLabel
-    }()
-    
     
     // MARK: - View Setup
     private func setupNavbar(){
-        self.navigationController?.navigationBar.tintColor = .gray
+        self.navigationController?.navigationBar.tintColor = .darkGray
+        view.backgroundColor = .white
         // Always display Large title in this View Controller
         if #available(iOS 11.0, *) {
             navigationItem.largeTitleDisplayMode = .always
@@ -119,17 +40,27 @@ class EditTransformerViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(handleSave))
     }
     
+    private func setupView(){
+        view.addSubview(editView)
+        if #available(iOS 11.0, *) {
+            NSLayoutConstraint.activate([
+                editView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                editView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                editView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+                editView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            ])
+        } else {
+            // Fallback on earlier versions
+            NSLayoutConstraint.activate([
+                editView.topAnchor.constraint(equalTo: view.topAnchor),
+                editView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                editView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                editView.rightAnchor.constraint(equalTo: view.rightAnchor)
+            ])
+        }
+    }
+    
     // MARK: - Handlers
-    @objc private func handleTeamSelection(){
-        
-    }
-    
-    @objc private func handleNameSelection(){
-        
-    }
-    
-    
-    
     @objc private func handleSave(){
         
     }
