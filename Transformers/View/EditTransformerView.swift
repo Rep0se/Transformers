@@ -9,7 +9,13 @@
 import UIKit
 
 class EditTransformerView: UIView {
-
+    
+    // MARK: - Properties
+    var teamKey = ""
+    var nameKey = ""
+    weak var delegate: EditTransformerViewControllerDelegate?
+    
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -33,7 +39,6 @@ class EditTransformerView: UIView {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textField.textColor = .white
         return textField
     }()
     
@@ -75,7 +80,6 @@ class EditTransformerView: UIView {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        textField.textColor = .white
         return textField
     }()
     
@@ -319,11 +323,78 @@ class EditTransformerView: UIView {
     
     // MARK: - Handlers
     @objc private func handleTeamSelection(){
-        
+        let alert = UIAlertController(title: "Select your team:", message: nil, preferredStyle: .actionSheet)
+        let optionsList = ["Autobots", "Decepticons"]
+        for key in optionsList {
+            let action = UIAlertAction(title: key, style: .default) { [weak self] action in
+                self?.teamKey = key
+                self?.teamTextField.text = key
+                self?.nameTextField.text = ""
+                self?.checkCompletion()
+                alert.dismiss(animated: true)
+            }
+            alert.addAction(action)
+        }
+        let close = UIAlertAction(title: "Close", style: .cancel) { action in
+            alert.dismiss(animated: true)
+        }
+        alert.addAction(close)
+        alert.modalPresentationStyle = .popover
+        // iPad presentation
+        let popPresenter: UIPopoverPresentationController? = alert.popoverPresentationController
+        popPresenter?.sourceView = teamButton
+        popPresenter?.sourceRect = teamButton.bounds
+        alert.view.tintColor = .darkGray
+        delegate?.presentAlert(alert: alert, animated: true)
     }
     
     @objc private func handleNameSelection(){
+        let alert = UIAlertController(title:  "Select your name:", message: nil, preferredStyle: .actionSheet)
+        let autobotNames = ["Afterburner", "Air Raid", "Beachcomber", "Blades", "Blaster", "Bluestreak", "Blurr", "Brainstorm", "Brawn", "Broadside", "Bumblebee", "Chase", "Chromedome", "Cliffjumper", "Cloudraker", "Computron", "Cosmos", "Crosshairs", "Defensor", "Doublecross", "Eject", "Fastlane", "Fireflight", "First Aid", "Fortress Maximus", "Freeway", "Gears", "Goldbug", "Grapple", "Grimlock", "Groove", "Grotusque", "Hardhead", "Highbrow", "Hoist", "Hot Rod", "Hot Spot", "Hound", "Hubcap", "Huffer", "Inferno", "Ironhide", "Jazz", "Jetfire", "Kup", "Lightspeed", "Metroplex", "Mirage", "Nosecone", "Omega Supreme", "Optimus Prime", "Outback", "Perceptor", "Pipes", "Pointblank", "Powerglide", "Prowl", "Punch", "Ramhorn", "Ratchet", "Red Alert", "Repugnus", "Rewind", "Roadbuster", "Rodimus Prime", "Rollbar", "Sandstorm", "Scattershot", "Searchlight", "Seaspray", "Sideswipe", "Silverbolt", "Siren", "Skids", "Skydive", "Sky Lynx", "Slag", "Slingshot", "Sludge", "Smokescreen", "Snarl", "Springer", "Steeljaw", "Strafe", "Streetwise", "Sunstreaker", "Superion", "Sureshot", "Swerve", "Swoop", "Tailgate", "Topspin", "Tracks", "Trailbreaker", "Twin Twist", "Ultra Magnus", "Warpath", "Wheelie", "Wheeljack", "Whirl", "Wideload", "Windcharger", "Wreck-Gar"]
+        let decepticonNames = ["Abominus", "Apeface", "Astrotrain", "Barrage", "Battletrap", "Blast Off", "Blitzwing", "Blot", "Bombshell", "Bonecrusher", "Brawl", "Breakdown", "Bruticus", "Buzzsaw", "Chop Shop", "Counterpunch", "Cutthroat", "Cyclonus", "Dead End", "Devastator", "Dirge", "Divebomb", "Drag Strip", "Fangry", "Flywheels", "Frenzy", "Galvatron", "Gnaw", "Headstrong", "Hook", "Hun-Grrr", "Kickback", "Laserbeak", "Long Haul", "Megatron", "Menasor", "Mindwipe", "Misfire", "Mixmaster", "Motormaster", "Octane", "Onslaught", "Overkill", "Pounce", "Predaking", "Ramjet", "Rampage", "Ransack", "Ratbat", "Ravage", "Razorclaw", "Reflector", "Rippersnapper", "Rumble", "Runabout", "Runamuck", "Scavenger", "Scorponok", "Scourge", "Scrapper", "Shockwave", "Shrapnel", "Sinnertwin", "Sixshot", "Skullcruncher", "Skywarp", "Slugfest", "Slugslinger", "Snapdragon", "Soundwave", "Starscream", "Swindle", "Tantrum", "Thrust", "Thundercracker", "Triggerhappy", "Trypticon", "Venom", "Vortex", "Weirdwolf", "Wildrider", "Wingspan"]
+        var optionsList: Array<String> = []
+        if teamTextField.text == "Autobots" {
+            optionsList = autobotNames
+        } else if teamTextField.text == "Decepticons" {
+            optionsList = decepticonNames
+        } else {
+            nameTextField.text = "Please select the team first"
+            return
+        }
         
+        for key in optionsList {
+            let action = UIAlertAction(title: key, style: .default) { [weak self] action in
+                self?.nameKey = key
+                self?.nameTextField.text = key
+                self?.checkCompletion()
+                alert.dismiss(animated: true)
+            }
+            alert.addAction(action)
+        }
+        let close = UIAlertAction(title: "Close", style: .cancel) { action in
+            alert.dismiss(animated: true)
+        }
+        alert.addAction(close)
+        alert.modalPresentationStyle = .popover
+        // iPad presentation
+        let popPresenter: UIPopoverPresentationController? = alert.popoverPresentationController
+        popPresenter?.sourceView = nameButton
+        popPresenter?.sourceRect = nameButton.bounds
+        alert.view.tintColor = .darkGray
+        delegate?.presentAlert(alert: alert, animated: true)
+
+    }
+    
+    private func checkCompletion(){
+//        func checkCompletion() {
+//            let surveyFilled = (!(firstQuestionTextField.text == "") && !(secondQuestionTextField.text == "")) && !(thirdQuestionTextField.text == "")
+//
+//            if surveyFilled && agreementButton.isSelected {
+//                doneButton.fadeIn()
+//            } else {
+//                doneButton.fadeOut()
+//            }
+//        }
     }
     
     // MARK: - UI Layout

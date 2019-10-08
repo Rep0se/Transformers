@@ -8,7 +8,11 @@
 
 import UIKit
 
-class EditTransformerViewController: UIViewController {
+protocol EditTransformerViewControllerDelegate:class{
+    func presentAlert(alert: UIAlertController, animated: Bool)
+}
+
+class EditTransformerViewController: UIViewController, EditTransformerViewControllerDelegate {
 
     
     // MARK: - Events
@@ -20,8 +24,9 @@ class EditTransformerViewController: UIViewController {
     }
     
     // MARK: - UI Elements
-    private let editView: UIView = {
+    lazy var editView: UIView = {
         let view = EditTransformerView(frame: CGRect.zero)
+        view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -63,6 +68,10 @@ class EditTransformerViewController: UIViewController {
     // MARK: - Handlers
     @objc private func handleSave(){
         
+    }
+    
+    func presentAlert(alert: UIAlertController, animated: Bool) {
+        self.present(alert, animated: animated)
     }
 
 }

@@ -25,9 +25,7 @@ class HomeTableViewCell: UITableViewCell {
     private let headerContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-
-    view.backgroundColor = .lightGray
-
+        view.backgroundColor = .lightGray
         return view
     }()
     
