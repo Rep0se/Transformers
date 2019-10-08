@@ -11,9 +11,11 @@ import UIKit
 class EditTransformerView: UIView {
     
     // MARK: - Properties
+    weak var delegate: EditTransformerViewControllerDelegate?
     var teamKey = ""
     var nameKey = ""
-    weak var delegate: EditTransformerViewControllerDelegate?
+    var techSpecs: Array<Int> = [5, 5, 5, 5, 5, 5, 5, 5]
+    var transformer: Transformer?
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -127,10 +129,14 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let strengthSlider: UISlider = {
+    lazy var strengthSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(strengthSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -138,7 +144,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -154,6 +160,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(intelligenceSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -161,7 +171,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -177,6 +187,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(speedSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -184,7 +198,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -200,6 +214,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(eduranceSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -207,7 +225,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -223,6 +241,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(rankSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -230,7 +252,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -246,6 +268,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(courageSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -253,7 +279,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -269,6 +295,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(firepowerSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -276,7 +306,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -292,6 +322,10 @@ class EditTransformerView: UIView {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+        slider.setValue(5, animated: true)
+        slider.addTarget(self, action: #selector(skillSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
     
@@ -299,7 +333,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        label.text = "55"
+        label.text = "5"
         return label
     }()
     
@@ -317,7 +351,7 @@ class EditTransformerView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        label.text = "55"
+        label.text = "30"
         return label
     }()
     
@@ -385,6 +419,78 @@ class EditTransformerView: UIView {
 
     }
     
+    @objc private func strengthSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[0] = Int(roundedStepValue)
+        strengthValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func intelligenceSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[1] = Int(roundedStepValue)
+        intelligenceValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func speedSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[2] = Int(roundedStepValue)
+        speedValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func eduranceSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[3] = Int(roundedStepValue)
+        eduranceValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func rankSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[4] = Int(roundedStepValue)
+        rankValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func courageSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[5] = Int(roundedStepValue)
+        courageValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func firepowerSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[6] = Int(roundedStepValue)
+        firepowerValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
+    @objc private func skillSliderValueDidChange(_ sender: UISlider!){
+        // Snaps slider to values
+        let roundedStepValue = round(sender.value)
+        sender.value = roundedStepValue
+        techSpecs[7] = Int(roundedStepValue)
+        skillValueLabel.text = String(Int(roundedStepValue))
+        overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+    }
+    
     private func checkCompletion(){
 //        func checkCompletion() {
 //            let surveyFilled = (!(firstQuestionTextField.text == "") && !(secondQuestionTextField.text == "")) && !(thirdQuestionTextField.text == "")
@@ -396,6 +502,8 @@ class EditTransformerView: UIView {
 //            }
 //        }
     }
+    
+    
     
     // MARK: - UI Layout
     private func setupLayout(){
@@ -463,7 +571,7 @@ class EditTransformerView: UIView {
             teamLine.bottomAnchor.constraint(equalTo: teamTextField.bottomAnchor),
             
             teamButton.leadingAnchor.constraint(equalTo: teamTextField.leadingAnchor),
-            teamButton.trailingAnchor.constraint(equalTo: teamTextField.trailingAnchor),
+            teamButton.trailingAnchor.constraint(equalTo: teamChevronImage.trailingAnchor),
             teamButton.topAnchor.constraint(equalTo: teamTextField.topAnchor),
             teamButton.bottomAnchor.constraint(equalTo: teamTextField.bottomAnchor),
             
@@ -487,7 +595,7 @@ class EditTransformerView: UIView {
             nameLine.bottomAnchor.constraint(equalTo: nameTextField.bottomAnchor),
             
             nameButton.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor),
-            nameButton.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
+            nameButton.trailingAnchor.constraint(equalTo: nameChevronImage.trailingAnchor),
             nameButton.topAnchor.constraint(equalTo: nameTextField.topAnchor),
             nameButton.bottomAnchor.constraint(equalTo: nameTextField.bottomAnchor),
             
