@@ -21,6 +21,41 @@ class HomeTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Properties
+    var cell: Transformer? {
+        didSet{
+            guard let unwrappedCell = cell else { return }
+            // Profile Image
+            switch unwrappedCell.team {
+            case "A":
+                profileImageView.image = #imageLiteral(resourceName: "autobot logo")
+            case "D":
+                profileImageView.image = #imageLiteral(resourceName: "decepticons logo")
+            default:
+                return
+            }
+            // Transformer Details & Specs
+            titleLabel.text = unwrappedCell.name
+            siseValuesTextView.alignAttributedText(
+                to: .right,
+                withFontWeight: .bold,
+                row1: String(unwrappedCell.strength),
+                row2: String(unwrappedCell.intelligence),
+                row3: String(unwrappedCell.speed),
+                row4: String(unwrappedCell.endurance)
+            )
+            rcfsValuesTextView.alignAttributedText(
+                to: .right,
+                withFontWeight: .bold,
+                row1: String(unwrappedCell.rank),
+                row2: String(unwrappedCell.courage),
+                row3: String(unwrappedCell.firepower),
+                row4: String(unwrappedCell.skill)
+            )
+            ratingLabel.text = String(unwrappedCell.strength + unwrappedCell.intelligence + unwrappedCell.speed + unwrappedCell.endurance + unwrappedCell.firepower)
+        }
+    }
+    
     // MARK: - UI Objects
     private let headerContainerView: UIView = {
         let view = UIView()

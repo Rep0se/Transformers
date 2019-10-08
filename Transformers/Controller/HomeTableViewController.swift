@@ -12,6 +12,7 @@ class HomeTableViewController: UITableViewController {
     
     // MARK: - Properties
     let cellId = "cellId"
+    var transformers: Array<Transformer> = []
 
     // MARK: - Events
     override func viewDidLoad() {
@@ -114,7 +115,7 @@ class HomeTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 156
+        return 140
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
