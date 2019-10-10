@@ -8,9 +8,6 @@
 
 
 import UIKit
-//import Firebase
-
-//let db = Firestore.firestore()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         window?.rootViewController = UINavigationController(rootViewController: HomeTableViewController())
-        
-//        FirebaseApp.configure()
         
         return true
     }

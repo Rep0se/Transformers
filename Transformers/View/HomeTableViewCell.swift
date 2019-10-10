@@ -169,7 +169,7 @@ class HomeTableViewCell: UITableViewCell {
         bodyContainerView.addSubview(rcfsTitlesTextView)
         bodyContainerView.addSubview(rcfsValuesTextView)
         
-        headerContainerView.anchorWithConstantsTo(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: bodyContainerView.topAnchor, right: contentView.rightAnchor, topPadding: 0, leftPadding: 0, bottomPadding: 0, rightPadding: 0)
+        headerContainerView.anchorWithConstantsTo(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: nil, right: contentView.rightAnchor, topPadding: 0, leftPadding: 0, bottomPadding: 0, rightPadding: 0)
         titleLabel.anchorWithConstantsTo(top: headerContainerView.topAnchor, left: headerContainerView.leftAnchor, bottom: nil, right: nil, topPadding: 8, leftPadding: 16, bottomPadding: 0, rightPadding: 0)
         ratingLabel.anchorWithConstantsTo(top: headerContainerView.topAnchor, left: nil, bottom: nil, right: headerContainerView.rightAnchor, topPadding: 8, leftPadding: 0, bottomPadding: 0, rightPadding: 16)
         

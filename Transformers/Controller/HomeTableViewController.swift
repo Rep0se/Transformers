@@ -12,13 +12,15 @@ class HomeTableViewController: UITableViewController {
     
     // MARK: - Properties
     let cellId = "cellId"
-    var transformers: Array<Transformer> = []
+    var transformers: Array<Transformer?> = []
+    
+    var response: [String: [Transformer?]] = ["": [nil]]
 
     // MARK: - Events
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let testformer = Transformer(id: "-LqmXIL_IhwF4Obb8oWg", name: "Deceptitest", team: "D", strength: 1, intelligence: 1, speed: 1, endurance: 1, rank: 1, courage: 1, firepower: 1, skill: 1, team_icon: nil)
+//        let testformer = Transformer(id: nil, name: "Player", team: "A", strength: 6, intelligence: 9, speed: 6, endurance: 9, rank: 6, courage: 9, firepower: 6, skill: 9, team_icon: nil)
 //        _ = ApiService.shared.create(body: testformer)
         
 //        _ = ApiService.shared.readAll()
@@ -32,20 +34,26 @@ class HomeTableViewController: UITableViewController {
 //        _ = ApiService.shared.update(body: testformer)
         
 //        _ = ApiService.shared.delete(transformerId: "-LqmRUkPN0-SnadIEv_t")
-        _ = ApiService.shared.readAll()
+        
         
 //        let key = ApiService.shared.authorize()
 //        print("---> \(String(describing: key))")
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: cellId)
         
         setupNavbar()
+        
+        // App First Launch
+        if UserDefaults.standard.apiKey().isEmpty {
+            ApiService.shared.authorize { (apiKey) in
+                if !apiKey.isEmpty{
+                    UserDefaults.standard.setApiKey(value: apiKey)
+                    self.handleRefresh()
+                }
+            }
+        } else {
+            handleRefresh()
+        }
     }
     
     @objc private func refreshOptions(sender: UIRefreshControl){
@@ -89,6 +97,14 @@ class HomeTableViewController: UITableViewController {
     }
     
     @objc func handleRefresh(){
+        ApiService.shared.readAll { (response) in
+            self.response = response
+            self.transformers = response["transformers"] ?? []
+            //            print(self.transformers)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
         print("Refresh Initiated")
     }
     
