@@ -34,25 +34,46 @@ class HomeTableViewCell: UITableViewCell {
             default:
                 return
             }
+            
+            let (
+                strength,
+                intelligence,
+                speed,
+                endurance,
+                rank,
+                courage,
+                firepower,
+                skill
+            ) = (
+                unwrappedCell.strength ?? 5,
+                unwrappedCell.intelligence ?? 5,
+                unwrappedCell.speed ?? 5,
+                unwrappedCell.endurance ?? 5,
+                unwrappedCell.rank ?? 5,
+                unwrappedCell.courage ?? 5,
+                unwrappedCell.firepower ?? 5,
+                unwrappedCell.skill ?? 5
+            )
+            
             // Transformer Details & Specs
             titleLabel.text = unwrappedCell.name
             siseValuesTextView.alignAttributedText(
                 to: .right,
                 withFontWeight: .bold,
-                row1: String(unwrappedCell.strength),
-                row2: String(unwrappedCell.intelligence),
-                row3: String(unwrappedCell.speed),
-                row4: String(unwrappedCell.endurance)
+                row1: String(strength),
+                row2: String(intelligence),
+                row3: String(speed),
+                row4: String(endurance)
             )
             rcfsValuesTextView.alignAttributedText(
                 to: .right,
                 withFontWeight: .bold,
-                row1: String(unwrappedCell.rank),
-                row2: String(unwrappedCell.courage),
-                row3: String(unwrappedCell.firepower),
-                row4: String(unwrappedCell.skill)
+                row1: String(rank),
+                row2: String(courage),
+                row3: String(firepower),
+                row4: String(skill)
             )
-            ratingLabel.text = String(unwrappedCell.strength + unwrappedCell.intelligence + unwrappedCell.speed + unwrappedCell.endurance + unwrappedCell.firepower)
+            ratingLabel.text = String(strength + intelligence + speed + endurance + firepower)
         }
     }
     

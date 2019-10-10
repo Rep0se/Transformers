@@ -17,7 +17,26 @@ class HomeTableViewController: UITableViewController {
     // MARK: - Events
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+//        let testformer = Transformer(id: "-LqmXIL_IhwF4Obb8oWg", name: "Deceptitest", team: "D", strength: 1, intelligence: 1, speed: 1, endurance: 1, rank: 1, courage: 1, firepower: 1, skill: 1, team_icon: nil)
+//        _ = ApiService.shared.create(body: testformer)
+        
+//        _ = ApiService.shared.readAll()
+        
+        //  -LqmRUkPN0-SnadIEv_t
+        //  -LqmTjbPEtJk6ELqAqTq
+        //
+        
+//        _ = ApiService.shared.read(transformerId: "")
+        
+//        _ = ApiService.shared.update(body: testformer)
+        
+//        _ = ApiService.shared.delete(transformerId: "-LqmRUkPN0-SnadIEv_t")
+        _ = ApiService.shared.readAll()
+        
+//        let key = ApiService.shared.authorize()
+//        print("---> \(String(describing: key))")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -103,15 +122,14 @@ class HomeTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return transformers.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -120,9 +138,8 @@ class HomeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! HomeTableViewCell
-
-        // Configure the cell...
-
+        let transformer = transformers[indexPath.row]
+        cell.cell = transformer
         return cell
     }
     
@@ -145,6 +162,11 @@ class HomeTableViewController: UITableViewController {
         remove.backgroundColor = .red
 
         return [remove, edit]
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        
     }
 
 }
