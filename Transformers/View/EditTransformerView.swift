@@ -15,7 +15,7 @@ class EditTransformerView: UIView {
     var teamKey = ""
     var nameKey = ""
     var techSpecs = [Int](repeating: 5, count: 8)
-//    var transformer: Transformer?
+    var transformer: Transformer?
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -210,7 +210,7 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    lazy var eduranceSlider: UISlider = {
+    lazy var enduranceSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
@@ -538,7 +538,7 @@ class EditTransformerView: UIView {
         addSubview(speedSlider)
         addSubview(speedValueLabel)
         addSubview(eduranceLabel)
-        addSubview(eduranceSlider)
+        addSubview(enduranceSlider)
         addSubview(eduranceValueLabel)
         addSubview(rankLabel)
         addSubview(rankSlider)
@@ -665,10 +665,10 @@ class EditTransformerView: UIView {
             eduranceLabel.heightAnchor.constraint(equalToConstant: 21),
             eduranceLabel.widthAnchor.constraint(equalToConstant: 90),
 
-            eduranceSlider.topAnchor.constraint(equalTo: eduranceLabel.topAnchor),
-            eduranceSlider.bottomAnchor.constraint(equalTo: eduranceLabel.bottomAnchor),
-            eduranceSlider.leadingAnchor.constraint(equalTo: eduranceLabel.trailingAnchor, constant: 8),
-            eduranceSlider.trailingAnchor.constraint(equalTo: eduranceValueLabel.leadingAnchor, constant: -16),
+            enduranceSlider.topAnchor.constraint(equalTo: eduranceLabel.topAnchor),
+            enduranceSlider.bottomAnchor.constraint(equalTo: eduranceLabel.bottomAnchor),
+            enduranceSlider.leadingAnchor.constraint(equalTo: eduranceLabel.trailingAnchor, constant: 8),
+            enduranceSlider.trailingAnchor.constraint(equalTo: eduranceValueLabel.leadingAnchor, constant: -16),
 
             eduranceValueLabel.topAnchor.constraint(equalTo: eduranceLabel.topAnchor),
             eduranceValueLabel.bottomAnchor.constraint(equalTo: eduranceLabel.bottomAnchor),
@@ -751,6 +751,53 @@ class EditTransformerView: UIView {
             overallRatingValueLabel.widthAnchor.constraint(equalToConstant: 21),
         ])
         
+    }
+    
+    func updateView(){
+        if let transformer = transformer {
+            var team = ""
+            switch transformer.team{
+            case "A":
+                team = "Autobots"
+            case "D":
+                team = "Decepticons"
+            default:
+                team = "Unknown"
+            }
+            let (
+                strength,
+                intelligence,
+                speed,
+                endurance,
+                rank,
+                courage,
+                firepower,
+                skill
+            ) = (
+                transformer.strength ?? 5,
+                transformer.intelligence ?? 5,
+                transformer.speed ?? 5,
+                transformer.endurance ?? 5,
+                transformer.rank ?? 5,
+                transformer.courage ?? 5,
+                transformer.firepower ?? 5,
+                transformer.skill ?? 5
+            )
+            
+            teamTextField.text = team
+            teamKey = team
+            nameTextField.text = transformer.name
+            nameKey = transformer.name ?? ""
+            strengthSlider.setValue(Float(strength), animated: true)
+            intelligenceSlider.setValue(Float(intelligence), animated: true)
+            speedSlider.setValue(Float(speed), animated: true)
+            enduranceSlider.setValue(Float(endurance), animated: true)
+            rankSlider.setValue(Float(rank), animated: true)
+            courageSlider.setValue(Float(courage), animated: true)
+            firepowerSlider.setValue(Float(firepower), animated: true)
+            skillSlider.setValue(Float(skill), animated: true)
+            overallRatingValueLabel.text = String(strength + intelligence + speed + endurance + firepower)
+        }
     }
 
 }

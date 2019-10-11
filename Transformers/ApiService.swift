@@ -127,7 +127,7 @@ class ApiService {
         task.resume()
     }
     
-    func update(body: Transformer){
+    func update(body: Transformer, completion: (() -> Void)? = nil){
         guard let url = URL(string: Constants.baseUrl) else {
             print("Error: cannot create URL")
             return
@@ -139,6 +139,7 @@ class ApiService {
             do {
                 let result = try JSONDecoder().decode(Transformer.self, from: data)
                 print("Transformer Updated: \(String(describing: result))")
+                completion?()
             } catch let jsonErr {
                 print("Error serializing json: \(jsonErr)")
             }

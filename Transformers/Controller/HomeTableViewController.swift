@@ -108,6 +108,19 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     
     @objc func handleEdit(indexPath: IndexPath){
         print("Edit button tapped at cell \(indexPath)")
+        showHud()
+        let idToEdit = transformers[indexPath.row]?.id ?? ""
+        ApiService.shared.read(transformerId: idToEdit) { (transformer) in
+            self.hideHud()
+            DispatchQueue.main.async {
+                let editVC = EditTransformerViewController()
+                editVC.transformerToUpdate = transformer
+                editVC.editView.transformer = transformer
+                editVC.editView.updateView()
+                editVC.delegate = self
+                self.navigationController?.show(editVC, sender: self)
+            }
+        }
     }
     
     @objc func handleRemove(indexPath: IndexPath){
@@ -126,12 +139,16 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     // MARK: - Utility Methods
     func showHud(){
         loadingHud.show(in: self.view)
-        UIApplication.shared.beginIgnoringInteractionEvents()
+        DispatchQueue.main.async {
+            UIApplication.shared.beginIgnoringInteractionEvents()
+        }
     }
     
     func hideHud(){
         loadingHud.dismiss()
-        UIApplication.shared.endIgnoringInteractionEvents()
+        DispatchQueue.main.async {
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
     }
     
     // MARK: - View Setup

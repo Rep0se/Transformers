@@ -510,8 +510,9 @@
 			baseConfigurationReference = 8EC033A4FAD6774025B84EE7 /* Pods-Transformers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = M8TURMP4NS;
 				INFOPLIST_FILE = Transformers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -521,6 +522,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.alexandersundiev.Transformers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -531,8 +533,9 @@
 			baseConfigurationReference = 0C8BF317EAB48C5F6AB565C0 /* Pods-Transformers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = M8TURMP4NS;
 				INFOPLIST_FILE = Transformers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -542,6 +545,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.alexandersundiev.Transformers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
