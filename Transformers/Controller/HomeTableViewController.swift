@@ -104,7 +104,6 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
         ApiService.shared.readAll { (response) in
             self.response = response
             self.transformers = response["transformers"] ?? []
-            //            print(self.transformers)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -118,7 +117,13 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     
     @objc func handleRemove(indexPath: IndexPath){
         print("Remove button tapped at cell \(indexPath)")
-        ApiService.shared.delete(transformerId: transformers[indexPath.row]?.id ?? ""){
+        let cellToDelete = indexPath.row
+        let idToDelete = transformers[cellToDelete]?.id ?? ""
+        transformers.remove(at: cellToDelete)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        ApiService.shared.delete(transformerId: idToDelete){
             self.handleRefresh()
         }
     }

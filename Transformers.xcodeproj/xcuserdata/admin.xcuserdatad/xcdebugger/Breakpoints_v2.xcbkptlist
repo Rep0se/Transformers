@@ -14,8 +14,8 @@
             filePath = "Transformers/Controller/HomeTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "handleRemove(indexPath:)"
             landmarkType = "7">
          </BreakpointContent>
