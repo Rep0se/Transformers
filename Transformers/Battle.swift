@@ -82,6 +82,15 @@ class Battle {
                 } else {
                     battleSheet.append("D")
                 }
+                // Special win cases
+            } else if teamAutobots[index].name == "Optimus Prime" || teamDecepticons[index].name == "Predaking" {
+                if teamAutobots[index].name == "Optimus Prime" && teamDecepticons[index].name == "Predaking"{
+                    battleSheet.append("T")
+                } else if teamAutobots[index].name == "Optimus Prime" {
+                    battleSheet.append("A")
+                } else {
+                    battleSheet.append("D")
+                }
                 // Win by Overall Rating
             } else {
                 let (aStrength, aIntelligence, aSpeed, aEndurance, aFirepower) = (teamAutobots[index].strength ?? 0, teamAutobots[index].intelligence ?? 0, teamAutobots[index].speed ?? 0, teamAutobots[index].endurance ?? 0, teamAutobots[index].firepower ?? 0)
