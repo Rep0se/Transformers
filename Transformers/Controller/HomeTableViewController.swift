@@ -73,6 +73,7 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     lazy var battleButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Battle Icon"), style: .plain, target: self, action: #selector(handleBattle))
         barButton.tintColor = .darkGray
+        barButton.isEnabled = false
         return barButton
     }()
     
@@ -86,9 +87,16 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     @objc func handleBattle(){
         print("Battle button tapped")
         if let transformers = transformers as? [Transformer] {
-            Battle.shared.checkEligibility(transformers: transformers)
+            let result = Battle.shared.battle(transformers: transformers)
+            let alert = UIAlertController(title: "Result", message: result, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { action in
+                //Do something here, eg dismiss the alert window
+                alert.dismiss(animated: true)
+            })
+            alert.addAction(ok)
+            present(alert, animated: true)
+            alert.view.tintColor = .gray
         }
-        
     }
     
     @objc func handleCreateNew(){
@@ -105,6 +113,7 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.hideHud()
+                self.battleButton.isEnabled = true
             }
         }
         print("Refresh Initiated")
