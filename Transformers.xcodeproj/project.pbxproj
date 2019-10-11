@@ -16,6 +16,7 @@
 		84304B2F234A9A4000467ECC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84304B2D234A9A4000467ECC /* LaunchScreen.storyboard */; };
 		84304B3A234A9A4000467ECC /* TransformersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84304B39234A9A4000467ECC /* TransformersTests.swift */; };
 		8446FBBA234F9A780069642E /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446FBB9234F9A780069642E /* UserDefaults+Extension.swift */; };
+		844DC2572350E3A50034A72A /* Battle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DC2562350E3A50034A72A /* Battle.swift */; };
 		84B07712234B6EA700B95B50 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B07711234B6EA700B95B50 /* HomeTableViewController.swift */; };
 		84B07717234B816A00B95B50 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B07716234B816A00B95B50 /* HomeTableViewCell.swift */; };
 		84B0771A234B99AD00B95B50 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B07719234B99AD00B95B50 /* UITextView+Extension.swift */; };
@@ -51,6 +52,7 @@
 		84304B39234A9A4000467ECC /* TransformersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformersTests.swift; sourceTree = "<group>"; };
 		84304B3B234A9A4000467ECC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8446FBB9234F9A780069642E /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		844DC2562350E3A50034A72A /* Battle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battle.swift; sourceTree = "<group>"; };
 		84B07711234B6EA700B95B50 /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		84B07716234B816A00B95B50 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		84B07719234B99AD00B95B50 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				84B07718234B998400B95B50 /* Extensions */,
 				84304B22234A9A3E00467ECC /* AppDelegate.swift */,
 				840738C8234D02E0002BBE7F /* ApiService.swift */,
+				844DC2562350E3A50034A72A /* Battle.swift */,
 				84304B2B234A9A4000467ECC /* Assets.xcassets */,
 				84304B2D234A9A4000467ECC /* LaunchScreen.storyboard */,
 				84304B30234A9A4000467ECC /* Info.plist */,
@@ -356,6 +359,7 @@
 				84B07712234B6EA700B95B50 /* HomeTableViewController.swift in Sources */,
 				84B0771A234B99AD00B95B50 /* UITextView+Extension.swift in Sources */,
 				84304B23234A9A3E00467ECC /* AppDelegate.swift in Sources */,
+				844DC2572350E3A50034A72A /* Battle.swift in Sources */,
 				8446FBBA234F9A780069642E /* UserDefaults+Extension.swift in Sources */,
 				840738B6234C14CF002BBE7F /* Transformer.swift in Sources */,
 			);
@@ -512,7 +516,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = M8TURMP4NS;
 				INFOPLIST_FILE = Transformers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -535,7 +539,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = M8TURMP4NS;
 				INFOPLIST_FILE = Transformers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

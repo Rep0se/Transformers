@@ -85,6 +85,10 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     // MARK: Handlers
     @objc func handleBattle(){
         print("Battle button tapped")
+        if let transformers = transformers as? [Transformer] {
+            Battle.shared.checkEligibility(transformers: transformers)
+        }
+        
     }
     
     @objc func handleCreateNew(){
