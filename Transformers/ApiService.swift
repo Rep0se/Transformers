@@ -9,6 +9,7 @@
 import Foundation
 
 class ApiService {
+    // MARK: - Singleton Implementation
     private init() {}
     static let shared = ApiService()
     

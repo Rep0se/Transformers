@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 protocol HomeTableViewControllerDelegate:class{
     func handleRefresh()
+    func showHud()
+    func hideHud()
 }
 
 class HomeTableViewController: UITableViewController, HomeTableViewControllerDelegate {
@@ -24,25 +27,6 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let testformer = Transformer(id: nil, name: "Player", team: "A", strength: 6, intelligence: 9, speed: 6, endurance: 9, rank: 6, courage: 9, firepower: 6, skill: 9, team_icon: nil)
-//        _ = ApiService.shared.create(body: testformer)
-        
-//        _ = ApiService.shared.readAll()
-        
-        //  -LqmRUkPN0-SnadIEv_t
-        //  -LqmTjbPEtJk6ELqAqTq
-        //
-        
-//        _ = ApiService.shared.read(transformerId: "")
-        
-//        _ = ApiService.shared.update(body: testformer)
-        
-//        _ = ApiService.shared.delete(transformerId: "-LqmRUkPN0-SnadIEv_t")
-        
-        
-//        let key = ApiService.shared.authorize()
-//        print("---> \(String(describing: key))")
-        
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: cellId)
         
         setupNavbar()
@@ -52,10 +36,12 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
             ApiService.shared.authorize { (apiKey) in
                 if !apiKey.isEmpty{
                     UserDefaults.standard.setApiKey(value: apiKey)
+                    self.showHud()
                     self.handleRefresh()
                 }
             }
         } else {
+            showHud()
             handleRefresh()
         }
     }
@@ -68,7 +54,15 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     }
     
     // MARK: - UI Elements
-    let logoView: UIImageView = {
+    private let loadingHud: JGProgressHUD = {
+        let hud = JGProgressHUD(style: .light)
+        hud.textLabel.text = "Loading…"
+        hud.interactionType = .blockAllTouches
+        hud.indicatorView = JGProgressHUDIndeterminateIndicatorView()
+        return hud
+    }()
+    
+    private let logoView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "Transformers Logo")
@@ -106,6 +100,7 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
             self.transformers = response["transformers"] ?? []
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.hideHud()
             }
         }
         print("Refresh Initiated")
@@ -117,6 +112,7 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
     
     @objc func handleRemove(indexPath: IndexPath){
         print("Remove button tapped at cell \(indexPath)")
+        showHud()
         let cellToDelete = indexPath.row
         let idToDelete = transformers[cellToDelete]?.id ?? ""
         transformers.remove(at: cellToDelete)
@@ -127,8 +123,18 @@ class HomeTableViewController: UITableViewController, HomeTableViewControllerDel
             self.handleRefresh()
         }
     }
+    // MARK: - Utility Methods
+    func showHud(){
+        loadingHud.show(in: self.view)
+        UIApplication.shared.beginIgnoringInteractionEvents()
+    }
     
-    // MARK: View Setup
+    func hideHud(){
+        loadingHud.dismiss()
+        UIApplication.shared.endIgnoringInteractionEvents()
+    }
+    
+    // MARK: - View Setup
     private func setupNavbar(){
         navigationItem.titleView = logoView
         navigationController?.navigationBar.tintColor = .darkGray

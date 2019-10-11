@@ -90,6 +90,7 @@ class EditTransformerViewController: UIViewController, EditTransformerViewContro
         let name = editView.nameKey
         let techSpecs = editView.techSpecs
         let transformer = Transformer(id: nil, name: name, team: team, strength: techSpecs[0], intelligence: techSpecs[1], speed: techSpecs[2], endurance: techSpecs[3], rank: techSpecs[4], courage: techSpecs[5], firepower: techSpecs[6], skill: techSpecs[7], team_icon: nil)
+        delegate?.showHud()
         ApiService.shared.create(body: transformer) {
             self.delegate?.handleRefresh()
             DispatchQueue.main.async {
