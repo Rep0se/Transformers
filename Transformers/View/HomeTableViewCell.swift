@@ -113,7 +113,7 @@ class HomeTableViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = #imageLiteral(resourceName: "autobot logo")
         imageView.tintColor = .black
-        imageView.layer.cornerRadius = 24
+//        imageView.layer.cornerRadius = 24
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView

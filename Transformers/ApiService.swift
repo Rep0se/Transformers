@@ -66,7 +66,7 @@ class ApiService {
         task.resume()
     }
     
-    func create(body: Transformer){
+    func create(body: Transformer, completion: (() -> Void)? = nil){
             guard let url = URL(string: Constants.baseUrl) else {
                 print("Error: cannot create URL")
                 return
@@ -78,6 +78,7 @@ class ApiService {
                 do {
                     let result = try JSONDecoder().decode(Transformer.self, from: data)
                     print("Transformer Created: \(String(describing: result))")
+                    completion?()
                 } catch let jsonErr {
                     print("Error serializing json: \(jsonErr)")
                 }
@@ -144,7 +145,7 @@ class ApiService {
         task.resume()
     }
     
-    func delete(transformerId: String){
+    func delete(transformerId: String, completion: (() -> Void)? = nil){
         guard let url = URL(string: Constants.baseUrl + "/\(transformerId)") else {
             print("Error: cannot create URL")
             return
@@ -155,6 +156,7 @@ class ApiService {
             guard let data = data else { return }
             let result = String(data: data, encoding: .utf8)
             print("Transformer Deleted: \(String(describing: result))")
+            completion?()
         }
         task.resume()
     }

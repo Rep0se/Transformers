@@ -10,10 +10,14 @@ import UIKit
 
 protocol EditTransformerViewControllerDelegate:class{
     func presentAlert(alert: UIAlertController, animated: Bool)
+    func enableSaveButton()
+    func disableSaveButton()
 }
 
 class EditTransformerViewController: UIViewController, EditTransformerViewControllerDelegate {
-
+    
+    // MARK: - Properties
+    weak var delegate: HomeTableViewControllerDelegate?
     
     // MARK: - Events
     override func viewDidLoad() {
@@ -24,11 +28,17 @@ class EditTransformerViewController: UIViewController, EditTransformerViewContro
     }
     
     // MARK: - UI Elements
-    lazy var editView: UIView = {
+    lazy var editView: EditTransformerView = {
         let view = EditTransformerView(frame: CGRect.zero)
         view.delegate = self
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    lazy var saveButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(handleSave))
+        button.isEnabled = false
+        return button
     }()
     
     // MARK: - View Setup
@@ -42,7 +52,7 @@ class EditTransformerViewController: UIViewController, EditTransformerViewContro
             // Fallback on earlier versions
         }
         navigationItem.title = "Create Transformer"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(handleSave))
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     private func setupView(){
@@ -67,11 +77,38 @@ class EditTransformerViewController: UIViewController, EditTransformerViewContro
     
     // MARK: - Handlers
     @objc private func handleSave(){
-        
+        let teamKey = editView.teamKey
+        var team = "A"
+        switch teamKey {
+        case "Autobots":
+            team = "A"
+        case "Decepticons":
+            team = "D"
+        default:
+            team = "A"
+        }
+        let name = editView.nameKey
+        let techSpecs = editView.techSpecs
+        let transformer = Transformer(id: nil, name: name, team: team, strength: techSpecs[0], intelligence: techSpecs[1], speed: techSpecs[2], endurance: techSpecs[3], rank: techSpecs[4], courage: techSpecs[5], firepower: techSpecs[6], skill: techSpecs[7], team_icon: nil)
+        ApiService.shared.create(body: transformer) {
+            self.delegate?.handleRefresh()
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
+    // MARK: - Delegate Methods
     func presentAlert(alert: UIAlertController, animated: Bool) {
         self.present(alert, animated: animated)
+    }
+    
+    func enableSaveButton(){
+        saveButton.isEnabled = true
+    }
+    
+    func disableSaveButton(){
+        saveButton.isEnabled = false
     }
 
 }

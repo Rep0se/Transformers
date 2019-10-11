@@ -8,7 +8,11 @@
 
 import UIKit
 
-class HomeTableViewController: UITableViewController {
+protocol HomeTableViewControllerDelegate:class{
+    func handleRefresh()
+}
+
+class HomeTableViewController: UITableViewController, HomeTableViewControllerDelegate {
     
     // MARK: - Properties
     let cellId = "cellId"
@@ -92,7 +96,7 @@ class HomeTableViewController: UITableViewController {
     @objc func handleCreateNew(){
         print("Create button tapped")
         let createVC = EditTransformerViewController()
-        // possible delegate <----
+        createVC.delegate = self
         self.navigationController?.show(createVC, sender: self)
     }
     
@@ -114,6 +118,9 @@ class HomeTableViewController: UITableViewController {
     
     @objc func handleRemove(indexPath: IndexPath){
         print("Remove button tapped at cell \(indexPath)")
+        ApiService.shared.delete(transformerId: transformers[indexPath.row]?.id ?? ""){
+            self.handleRefresh()
+        }
     }
     
     // MARK: View Setup

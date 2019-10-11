@@ -14,8 +14,8 @@ class EditTransformerView: UIView {
     weak var delegate: EditTransformerViewControllerDelegate?
     var teamKey = ""
     var nameKey = ""
-    var techSpecs: Array<Int> = [5, 5, 5, 5, 5, 5, 5, 5]
-    var transformer: Transformer?
+    var techSpecs = [Int](repeating: 5, count: 8)
+//    var transformer: Transformer?
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -135,7 +135,7 @@ class EditTransformerView: UIView {
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[0]), animated: true)
         slider.addTarget(self, action: #selector(strengthSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -156,13 +156,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let intelligenceSlider: UISlider = {
+    lazy var intelligenceSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[1]), animated: true)
         slider.addTarget(self, action: #selector(intelligenceSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -183,13 +183,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let speedSlider: UISlider = {
+    lazy var speedSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[2]), animated: true)
         slider.addTarget(self, action: #selector(speedSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -210,13 +210,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let eduranceSlider: UISlider = {
+    lazy var eduranceSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[3]), animated: true)
         slider.addTarget(self, action: #selector(eduranceSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -237,13 +237,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let rankSlider: UISlider = {
+    lazy var rankSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[4]), animated: true)
         slider.addTarget(self, action: #selector(rankSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -264,13 +264,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let courageSlider: UISlider = {
+    lazy var courageSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[5]), animated: true)
         slider.addTarget(self, action: #selector(courageSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -291,13 +291,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let firepowerSlider: UISlider = {
+    lazy var firepowerSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[6]), animated: true)
         slider.addTarget(self, action: #selector(firepowerSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -318,13 +318,13 @@ class EditTransformerView: UIView {
         return textLabel
     }()
     
-    private let skillSlider: UISlider = {
+    lazy var skillSlider: UISlider = {
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.tintColor = .gray
         slider.minimumValue = 1
         slider.maximumValue = 10
-        slider.setValue(5, animated: true)
+        slider.setValue(Float(techSpecs[7]), animated: true)
         slider.addTarget(self, action: #selector(skillSliderValueDidChange(_:)), for: .valueChanged)
         return slider
     }()
@@ -426,6 +426,7 @@ class EditTransformerView: UIView {
         techSpecs[0] = Int(roundedStepValue)
         strengthValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func intelligenceSliderValueDidChange(_ sender: UISlider!){
@@ -435,6 +436,7 @@ class EditTransformerView: UIView {
         techSpecs[1] = Int(roundedStepValue)
         intelligenceValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func speedSliderValueDidChange(_ sender: UISlider!){
@@ -444,6 +446,7 @@ class EditTransformerView: UIView {
         techSpecs[2] = Int(roundedStepValue)
         speedValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func eduranceSliderValueDidChange(_ sender: UISlider!){
@@ -453,6 +456,7 @@ class EditTransformerView: UIView {
         techSpecs[3] = Int(roundedStepValue)
         eduranceValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func rankSliderValueDidChange(_ sender: UISlider!){
@@ -462,6 +466,7 @@ class EditTransformerView: UIView {
         techSpecs[4] = Int(roundedStepValue)
         rankValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func courageSliderValueDidChange(_ sender: UISlider!){
@@ -471,6 +476,7 @@ class EditTransformerView: UIView {
         techSpecs[5] = Int(roundedStepValue)
         courageValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func firepowerSliderValueDidChange(_ sender: UISlider!){
@@ -480,6 +486,7 @@ class EditTransformerView: UIView {
         techSpecs[6] = Int(roundedStepValue)
         firepowerValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     @objc private func skillSliderValueDidChange(_ sender: UISlider!){
@@ -489,18 +496,18 @@ class EditTransformerView: UIView {
         techSpecs[7] = Int(roundedStepValue)
         skillValueLabel.text = String(Int(roundedStepValue))
         overallRatingValueLabel.text = String(techSpecs[0] + techSpecs[1] + techSpecs[2] + techSpecs[3] + techSpecs[6])
+        checkCompletion()
     }
     
     private func checkCompletion(){
-//        func checkCompletion() {
-//            let surveyFilled = (!(firstQuestionTextField.text == "") && !(secondQuestionTextField.text == "")) && !(thirdQuestionTextField.text == "")
-//
-//            if surveyFilled && agreementButton.isSelected {
-//                doneButton.fadeIn()
-//            } else {
-//                doneButton.fadeOut()
-//            }
-//        }
+        let pageComplete = !(teamTextField.text?.isEmpty ?? true) && !(nameTextField.text?.isEmpty ?? true)
+        
+        if pageComplete {
+            // Delegate -> Show/Hide Save button on VC
+            delegate?.enableSaveButton()
+        } else {
+            delegate?.disableSaveButton()
+        }
     }
     
     
